@@ -2,7 +2,7 @@
   "name": "escape-window",
   "title": "Escape Window",
   "description": "Changes the behavior of the ESC key from closing all windows to minimizing them.",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": "nevenall",
   "scripts": [
     "./index.js"
