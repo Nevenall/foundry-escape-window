@@ -12,7 +12,8 @@ Hooks.on("ready", function () {
       // Case 2 - minimize open UI windows
       else if (Object.values(ui.windows).some(w => !w._minimized)) {
          Object.values(ui.windows).forEach(app => {
-            app.minimize();
+            if (app.options.minimizable)
+               app.minimize();
          });
       }
 
