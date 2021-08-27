@@ -4,4 +4,4 @@ A simple module for FoundryVTT to change the behavior of the escape key from clo
 
 ## Options?
 
-The future might include some options, but for now, just this. 
+The future might include some options, but for now, just this.
