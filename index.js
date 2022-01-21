@@ -1,35 +1,34 @@
-Hooks.on("ready", function () {
-   // override ESC key handler to not shut windows
-   keyboard._onEscape = function (event, up, modifiers) {
-      if (up || modifiers.hasFocus) return;
+Hooks.on('init', function () {
+   // override the default on dismiss behavior
+   ClientKeybindings._onDismiss = this._onDismiss
+})
 
-      // Save fog of war if there are pending changes
-      if (canvas.ready) canvas.sight.saveFog();
+function _onDismiss(context) {
+   // Save fog of war if there are pending changes
+   if (canvas.ready) canvas.sight.saveFog();
 
-      // Case 1 - dismiss an open context menu
-      if (ui.context && ui.context.menu.length) ui.context.close();
-
-      // Case 2 - minimize open UI windows
-      else if (Object.values(ui.windows).some(w => !w._minimized)) {
-         Object.values(ui.windows).forEach(app => {
-            if (app.options.minimizable)
-               app.minimize();
-         });
-      }
-
-      // Case 3 (GM) - release controlled objects
-      else if (canvas.ready && game.user.isGM && Object.keys(canvas.activeLayer._controlled).length) {
-         event.preventDefault();
-         canvas.activeLayer.releaseAll();
-      }
-
-      // Case 4 - toggle the main menu
-      else ui.menu.toggle();
-
-      // Flag the keydown workflow as handled
-      this._handled.add(modifiers.key);
+   // Case 1 - dismiss an open context menu
+   if (ui.context && ui.context.menu.length) {
+      ui.context.close();
+      return true;
    }
 
+   // Case 2 - minimize open UI windows
+   if (Object.values(ui.windows).some(w => !w._minimized)) {
+      Object.values(ui.windows).forEach(app => {
+         if (app.options.minimizable)
+            app.minimize();
+      });
+      return true;
+   }
 
+   // Case 3 (GM) - release controlled objects (if not in a preview)
+   if (game.user.isGM && canvas.activeLayer && Object.keys(canvas.activeLayer._controlled).length) {
+      if (!canvas.activeLayer.preview?.children.length) canvas.activeLayer.releaseAll();
+      return true;
+   }
 
-})
+   // Case 4 - toggle the main menu
+   ui.menu.toggle();
+   return true;
+}
