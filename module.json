@@ -5,7 +5,8 @@
   "authors": [
     {
       "name": "nevenall",
-      "url": "https://github.com/Nevenall"
+      "url": "https://github.com/Nevenall",
+      "flags": {}
     }
   ],
   "version": "1.1.0",
