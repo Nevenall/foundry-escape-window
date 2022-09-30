@@ -1,17 +1,22 @@
 {
-  "name": "escape-window",
+  "id": "escape-window",
   "title": "Escape Window",
   "description": "Changes the behavior of the ESC key from closing all windows to minimizing them.",
-  "version": "1.0.0",
-  "author": "nevenall",
-  "scripts": [
-    "./index.js"
+  "authors": [
+    {
+      "name": "nevenall",
+      "url": "https://github.com/Nevenall",
+    }
   ],
-  "styles": [],
-  "packs": [],
+  "version": "1.1.0",
+  "compatibility": {
+    "minimum": "10",
+    "verified": "10"
+  },
+  "scripts": [
+    "index.js"
+  ],
   "url": "https://github.com/Nevenall/foundry-escape-window",
   "manifest": "https://raw.githubusercontent.com/Nevenall/foundry-escape-window/master/module.json",
   "download": "https://github.com/Nevenall/foundry-escape-window/archive/master.zip",
-  "minimumCoreVersion": "9",
-  "compatibleCoreVersion": "9"
 }
