@@ -16,13 +16,15 @@ Hooks.on('init', function () {
          return true;
       }
 
-      // Case 3 - minimize open UI windows
-      if (Object.values(ui.windows).some(w => !w._minimized)) {
-         Object.values(ui.windows).forEach(app => {
-            if (app.options.minimizable)
-               app.minimize();
-         });
-         return true;
+      // Case 3 - minimize open UI windows if not globally disabled by module settings
+      if (!game.settings.get('escape-window', 'disableWindowMinimise')) {
+          if (Object.values(ui.windows).some(w => !w._minimized)) {
+              Object.values(ui.windows).forEach(app => {
+                  if (app.options.minimizable)
+                      app.minimize();
+              });
+              return true;
+          }
       }
 
       // Case 4 (GM) - release controlled objects (if not in a preview)
@@ -37,5 +39,16 @@ Hooks.on('init', function () {
       if (canvas.ready) canvas.fog.save();
       return true;
    }
+
+   game.settings.register('escape-window', 'disableWindowMinimise', {
+      name: "Disable window minimize",
+      hint: "Pressing the escape key no longer minimizes open windows.",
+      scope: 'world',
+      config: true,
+      requiresReload: false,
+      type: Boolean,
+      default: false
+   })
+
 })
 
