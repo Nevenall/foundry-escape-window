@@ -15,13 +15,10 @@ Hooks.on('ready', function () {
    let minimize = game.settings.get("escape-window", "minimize")
    console.log(`Module | escape-window | minimize = ${minimize}`)
 
-
    // redirect the active escape key binding with our own. It's based on Clientkeybindings.#onDismiss, but with our improvements
    let binding = game.keybindings.activeKeys.get("Escape").find(_ => _.action === "core.dismiss")
    if (binding) {
       binding.onDown = async (context) => {
-
-
          // Cancel current drag workflow
          if (canvas.currentMouseManager) {
             canvas.currentMouseManager.interactionData.cancelled = true;
@@ -93,46 +90,4 @@ Hooks.on('ready', function () {
          return true;
       }
    }
-
-
-
-   // // override the default on dismiss behavior
-   // ClientKeybindings.#onDismiss = context => {
-   //    // Save fog of war if there are pending changes
-   //    if (canvas.ready) canvas.fog.commit();
-
-   //    // Case 1 - dismiss an open context menu
-   //    if (ui.context && ui.context.menu.length) {
-   //       ui.context.close();
-   //       return true;
-   //    }
-
-   //    // Case 2 - dismiss an open Tour
-   //    if (Tour.tourInProgress) {
-   //       Tour.activeTour.exit();
-   //       return true;
-   //    }
-
-   //    // Case 3 - minimize open UI windows
-   //    if (Object.values(ui.windows).some(w => !w._minimized)) {
-   //       Object.values(ui.windows).forEach(app => {
-   //          if (app.options.minimizable)
-   //             app.minimize();
-   //       });
-   //       return true;
-   //    }
-
-   //    // Case 4 (GM) - release controlled objects (if not in a preview)
-   //    if (game.user.isGM && canvas.activeLayer && canvas.activeLayer.controlled.length) {
-   //       if (!canvas.activeLayer.preview?.children.length) canvas.activeLayer.releaseAll();
-   //       return true;
-   //    }
-
-   //    // Case 5 - toggle the main menu
-   //    ui.menu.toggle();
-   //    // Save the fog immediately rather than waiting for the 3s debounced save as part of commitFog.
-   //    if (canvas.ready) canvas.fog.save();
-   //    return true;
-   // }
 })
-
