@@ -1,7 +1,7 @@
 # Escape Window
 
-A simple module for FoundryVTT to change the behavior of the escape key from closing open windows minimizing them.
+A simple module for FoundryVTT prevent the Escape key from closing all open windows.
 
 ## Options
 
-You can set the behavior to either: minimized state of all open windows, or do nothing to open windows.
+Minimize windows when hitting Escape: Instead of doing nothing, the escape key will minimize all open windows, or maximize all minimized windows.

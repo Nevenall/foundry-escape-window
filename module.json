@@ -1,7 +1,7 @@
 {
   "id": "escape-window",
   "title": "Escape Window",
-  "description": "Changes the behavior of the ESC key from closing all windows to minimizing them.",
+  "description": "Stops the ESC key from closing all windows. Can optionally minimize them.",
   "authors": [
     {
       "name": "nevenall",

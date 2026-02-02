@@ -1,5 +1,20 @@
+Hooks.on('init', function () {
+   game.settings.register("escape-window", "minimize", {
+      name: "Minimize all windows on hitting escape",
+      hint: "When true hitting escape will minimize all open windows, otherwise no changes will be made to windows.",
+      scope: "client",
+      config: true,
+      requiresReload: true,
+      type: Boolean,
+      default: false
+   })
+})
+
+
 Hooks.on('ready', function () {
-   console.log("Initializing Module escape-window")
+   let minimize = game.settings.get("escape-window", "minimize")
+   console.log(`Module | escape-window | minimize = ${minimize}`)
+
 
    // redirect the active escape key binding with our own. It's based on Clientkeybindings.#onDismiss, but with our improvements
    let binding = game.keybindings.activeKeys.get("Escape").find(_ => _.action === "core.dismiss")
@@ -37,31 +52,32 @@ Hooks.on('ready', function () {
 
          // Case 4 - close open UI windows
          // note - maximize() and minimize() claim to be promises, but do not act as promises
-         let changed = false;
-         for (const app of Object.values(ui.windows)) {
-            // toggle the minimization state of the window.
-            if (true && app.minimized) {
-               app.maximize()
-               changed = true
-            } else {
-               app.minimize()
-               changed = true
-            }
-         }
-         for (const app of foundry.applications.instances.values()) {
-            if (app.hasFrame) {
+         let shouldReturn = false
+         if (minimize) {
+            for (const app of Object.values(ui.windows)) {
                // toggle the minimization state of the window.
-               if (true && app.minimized) {
+               if (app.minimized) {
                   app.maximize()
-                  changed = true
+                  shouldReturn = true
                } else {
                   app.minimize()
-                  changed = true
+                  shouldReturn = true
+               }
+            }
+            for (const app of foundry.applications.instances.values()) {
+               if (app.hasFrame) {
+                  // toggle the minimization state of the window.
+                  if (app.minimized) {
+                     app.maximize()
+                     shouldReturn = true
+                  } else {
+                     app.minimize()
+                     shouldReturn = true
+                  }
                }
             }
          }
-
-         if (changed) return true;
+         if (shouldReturn) return true;
 
          // Case 5 (GM) - release controlled objects (if not in a preview)
          if (game.view !== "game") return false;
