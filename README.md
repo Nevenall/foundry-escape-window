@@ -1,6 +1,6 @@
 # Escape Window
 
-A simple module for FoundryVTT prevent the Escape key from closing all open windows.
+A simple module for FoundryVTT to prevent the Escape key from closing all open windows.
 
 ## Options
 
